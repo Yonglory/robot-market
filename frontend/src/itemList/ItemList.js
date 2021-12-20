@@ -3,11 +3,12 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import "./ItemList.scss";
-import moment from 'moment';
+// import moment from 'moment';
 import IconButton from "@mui/material/IconButton";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useDispatch } from 'react-redux';
 import { itemAdded, itemUpdated, countAdded } from '../features/itemsSlice';
+import {getTotalAmt} from '../features/totalAmtSlice';
 import { useSelector } from 'react-redux';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -44,7 +45,7 @@ export default function ItemList(props) {
         )
       }  
       dispatch(countAdded(item.name))
-   
+      dispatch(getTotalAmt({price: Number(item.price), sum: true}))
     }
     if(roboTypes.length <5 && roboTypes.indexOf(item.name) === -1){
       setroboTypes(prev => [...prev, item.name] );
@@ -67,7 +68,7 @@ export default function ItemList(props) {
               <div className="desc">
                 <h4 className="title">{item.name}</h4>
                 <h5 className="price">฿{item.price}</h5>
-                <h5>Date: {moment(item.createdAt).format('DD-MM-YYYY')} </h5>
+                {/* <h5>Date: {moment(item.createdAt).format('DD-MM-YYYY')} </h5> */}
                 <h5>Material: {item.material}</h5>
                 <h5 className="stock">Stock: {item.stock}</h5>
               </div>

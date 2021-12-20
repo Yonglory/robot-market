@@ -19,14 +19,16 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { countAdded, countReduced, itemRemove } from '../features/itemsSlice';
+import { getTotalAmt } from '../features/totalAmtSlice';
+
 import "./NavMenu.scss";
 
 export default function NavMenu() {
   const cartItems = useSelector(state => state.items);
+  const totalAmt = useSelector(state => state.totalAmt);
   const [state, setState] = React.useState({
     right: false
   });
-  const [totalPrice, setTotalPrice] = useState(0);
   const dispatch = useDispatch();
 
   const toggleDrawer = (open) => (event) => {
@@ -39,22 +41,24 @@ export default function NavMenu() {
   const increaseItem = (item) => {
     dispatch(countAdded(item.name))
     toggleDrawer(true);
+    dispatch(getTotalAmt({price: Number(item.price), sum: true}))
+
   }
   const reduceItem = (item) => {
     dispatch(countReduced(item.name))
     toggleDrawer(true);
-
+    dispatch(getTotalAmt({price: Number(item.price), sum: false}))
   }
   const removeItem = (item) => {
     dispatch(itemRemove(item.name))   
     toggleDrawer(true);
-
+    dispatch(getTotalAmt({price: Number(item.price), sum: false}))
   }
   const list = () => (
     <Box
       role="presentation"
     >
-      <Box className="title">
+      <Box className="navTitle">
         <ShoppingBagOutlinedIcon/> 
         <span> {cartItems.length} {cartItems.length <2 ? 'Item': 'Items'} </span>
       </Box>
@@ -95,15 +99,10 @@ export default function NavMenu() {
         ))}
       <Divider />
       <Button className="checkOut" size="large" variant="contained">
-        {`Check Out Now (฿${totalPrice})`}
+        {`Check Out Now (฿${totalAmt.totalAmt })`}
       </Button>
     </Box>
   );
-
-  useEffect(() => {
-    const total = cartItems.reduce((a,v) =>  a = a + v.price , 0 )
-    setTotalPrice(total);
-  }, [cartItems])
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

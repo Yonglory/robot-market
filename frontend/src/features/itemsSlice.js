@@ -6,7 +6,8 @@ const initialState = [
         "image": "https://robohash.org/Quinn Corwin.png?size=120x120",
         "price": "211.39",
         "stocks": 5,
-        "count": 0
+        "count": 0,
+        "totalAmt": 0
     }
 ]
 const itemsSlice = createSlice({
@@ -24,7 +25,8 @@ const itemsSlice = createSlice({
                     image,
                     price,
                     stocks,
-                    "count": 0
+                    count: 0,
+                    totalAmt: 0
                 },
             }
             },
@@ -56,9 +58,10 @@ const itemsSlice = createSlice({
         itemRemove(state, action) {
             const name = action.payload
             return state.filter((item) => item.name !== name);
-        }
+        },
+     
 
     },
   })
-export const { itemAdded, itemUpdated, countAdded,countReduced, itemRemove} = itemsSlice.actions
+export const { itemAdded, itemUpdated, countAdded,countReduced, itemRemove, getTotalAmt} = itemsSlice.actions
 export default itemsSlice.reducer
