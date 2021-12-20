@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { countAdded, countReduced, itemRemove } from '../features/itemsSlice';
 import { getTotalAmt } from '../features/totalAmtSlice';
-
+import NumberFormat from 'react-number-format';
 import "./NavMenu.scss";
 
 export default function NavMenu() {
@@ -99,7 +99,7 @@ export default function NavMenu() {
         ))}
       <Divider />
       <Button className="checkOut" size="large" variant="contained">
-        {`Check Out Now (฿${totalAmt.totalAmt })`}
+      Check Out Now ( <NumberFormat value={totalAmt.totalAmt} displayType={'text'} thousandSeparator={true} prefix={'฿'} /> )
       </Button>
     </Box>
   );
