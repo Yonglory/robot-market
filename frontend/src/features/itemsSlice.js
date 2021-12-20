@@ -18,34 +18,47 @@ const itemsSlice = createSlice({
           state.push(action.payload)
         },
         prepare(name, image, price, stocks) {
-          return {
-            payload: {
-                name,
-                image,
-                price,
-                stocks,
-                "count": 0
+            return {
+                payload: {
+                    name,
+                    image,
+                    price,
+                    stocks,
+                    "count": 0
+                },
+            }
             },
-          }
         },
-      },
-      countAdded(state, action) {
-        const name  = action.payload
-        const existingItem = state.find((item) => item.name === name)
-        if (existingItem) {
-            existingItem.count++
+        countAdded(state, action) {
+            const name  = action.payload
+            const existingItem = state.find((item) => item.name === name)
+            if (existingItem) {
+                existingItem.count++
+            }
+        },
+        countReduced(state, action){
+            const name  = action.payload
+            const existingItem = state.find((item) => item.name === name)
+            if (existingItem) {
+                if(existingItem.count > 0)
+                    existingItem.count--
+            } 
+        },
+        itemUpdated(state, action) {
+            const { name, image, price, stocks } = action.payload
+            const existingItem = state.find(item => item.name === name)
+            if (existingItem) {
+                existingItem.image = image
+                existingItem.price = price
+                existingItem.stocks = stocks
+            }
+        },
+        itemRemove(state, action) {
+            const name = action.payload
+            return state.filter((item) => item.name !== name);
         }
-      },
-      itemUpdated(state, action) {
-        const { name, image, price, stocks } = action.payload
-        const existingItem = state.find(item => item.name === name)
-        if (existingItem) {
-            existingItem.image = image
-            existingItem.price = price
-            existingItem.stocks = stocks
-        }
-    },
+
     },
   })
-export const { itemAdded, itemUpdated, countAdded} = itemsSlice.actions
+export const { itemAdded, itemUpdated, countAdded,countReduced, itemRemove} = itemsSlice.actions
 export default itemsSlice.reducer

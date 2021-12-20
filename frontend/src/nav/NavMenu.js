@@ -17,6 +17,8 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { countAdded, countReduced, itemRemove } from '../features/itemsSlice';
 import "./NavMenu.scss";
 
 export default function NavMenu() {
@@ -25,6 +27,7 @@ export default function NavMenu() {
     right: false
   });
   const [totalPrice, setTotalPrice] = useState(0);
+  const dispatch = useDispatch();
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -33,12 +36,23 @@ export default function NavMenu() {
 
     setState({ ...state, right: open });
   };
+  const increaseItem = (item) => {
+    dispatch(countAdded(item.name))
+    toggleDrawer(true);
+  }
+  const reduceItem = (item) => {
+    dispatch(countReduced(item.name))
+    toggleDrawer(true);
 
+  }
+  const removeItem = (item) => {
+    dispatch(itemRemove(item.name))   
+    toggleDrawer(true);
+
+  }
   const list = () => (
     <Box
       role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
     >
       <Box className="title">
         <ShoppingBagOutlinedIcon/> 
@@ -49,11 +63,11 @@ export default function NavMenu() {
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} key={index} className="cartList">
             <ListItem alignItems="flex-start">
               <Box className="action">
-                <IconButton className="add" size="small">
+                <IconButton onClick={()=>increaseItem(item)} className="add" size="small">
                     <AddOutlinedIcon />
                 </IconButton>
                 <span> {item.count} </span>
-                <IconButton className="remove" size="small">
+                <IconButton onClick={()=>reduceItem(item)} className="remove" size="small">
                     <RemoveOutlinedIcon />
                 </IconButton> 
               </Box>
@@ -70,9 +84,9 @@ export default function NavMenu() {
                     >
                     ฿{item.price}
                     </Typography>
-                    <IconButton className="delete" size="large">
-                    <DeleteForeverOutlinedIcon />
-                  </IconButton>
+                    <IconButton onClick={()=>removeItem(item)} className="delete" size="large">
+                      <DeleteForeverOutlinedIcon />
+                    </IconButton>
                   </React.Fragment>
                 }
               />
