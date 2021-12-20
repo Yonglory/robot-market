@@ -45,43 +45,43 @@ export default function NavMenu() {
         <span> {cartItems.length} {cartItems.length <2 ? 'Item': 'Items'} </span>
       </Box>
       <Divider />
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} class="cartList">
         {cartItems && cartItems.map((item, index) => (
-          <ListItem alignItems="flex-start" key={index}>
-            <Box className="action">
-              <IconButton className="add" size="small">
-                  <AddOutlinedIcon />
-              </IconButton>
-              <span> {item.stocks} </span>
-              <IconButton className="remove" size="small">
-                  <RemoveOutlinedIcon />
-              </IconButton> 
-            </Box>
-            <img alt={item.name} src={item.image} />
-            <ListItemText
-              primary={item.name}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                  ฿{item.price}
-                  </Typography>
-                  <IconButton className="delete" size="large">
-                  <DeleteForeverOutlinedIcon />
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} key={index} className="cartList">
+            <ListItem alignItems="flex-start">
+              <Box className="action">
+                <IconButton className="add" size="small">
+                    <AddOutlinedIcon />
                 </IconButton>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
+                <span> {item.stocks} </span>
+                <IconButton className="remove" size="small">
+                    <RemoveOutlinedIcon />
+                </IconButton> 
+              </Box>
+              <img alt={item.name} src={item.image} />
+              <ListItemText
+                primary={item.name}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                    ฿{item.price}
+                    </Typography>
+                    <IconButton className="delete" size="large">
+                    <DeleteForeverOutlinedIcon />
+                  </IconButton>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          </List>
         ))}
-      </List>
       <Divider />
       <Button className="checkOut" size="large" variant="contained">
-        {`Check Out Now (฿ ${totalPrice})`}
+        {`Check Out Now (฿${totalPrice})`}
       </Button>
     </Box>
   );

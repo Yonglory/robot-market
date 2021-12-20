@@ -12,7 +12,11 @@ const initialState = [
 const itemsSlice = createSlice({
   name: 'items',
   initialState,
-  reducers: {}
+  reducers: {
+    itemAdded(state, action) {
+        state.push(action.payload)
+      }
+  }
 })
-
+export const { itemAdded } = itemsSlice.actions
 export default itemsSlice.reducer

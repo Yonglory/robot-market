@@ -6,6 +6,8 @@ import "./ItemList.scss";
 import moment from 'moment';
 import IconButton from "@mui/material/IconButton";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { useDispatch } from 'react-redux';
+import { itemAdded } from '../features/itemsSlice';
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -15,13 +17,22 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function ItemList(props) {
   const [data, setData] = useState(null);
   const [cartList, setCartList] = useState([]);
-  const [roboTypes, setroboTypes] = useState([])
+  const [roboTypes, setroboTypes] = useState([]);
+  const dispatch = useDispatch();
   const handleClick = (index) => {
     if(data[index].stock > 0){
       setData(prevData => [...prevData, data[index].stock -=1])
     }
     if(roboTypes.length <5 && roboTypes.indexOf(data[index].name) === -1){
       setroboTypes(prev => [...prev, data[index].name] );
+      dispatch(
+        itemAdded({
+          "name": data[index].name,
+          "image": data[index].image,
+          "price": data[index].price,
+          "stocks": data[index].stock
+        })
+      )
       // setCartList(prevList => [...prevList, data[index]]);
     }else if(roboTypes.length === 5){
       alert("Robort Type is more than 5 now!")
