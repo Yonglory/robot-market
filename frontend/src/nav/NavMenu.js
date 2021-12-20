@@ -52,7 +52,7 @@ export default function NavMenu() {
                 <IconButton className="add" size="small">
                     <AddOutlinedIcon />
                 </IconButton>
-                <span> {item.stocks} </span>
+                <span> {item.count} </span>
                 <IconButton className="remove" size="small">
                     <RemoveOutlinedIcon />
                 </IconButton> 

@@ -7,7 +7,9 @@ import moment from 'moment';
 import IconButton from "@mui/material/IconButton";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useDispatch } from 'react-redux';
-import { itemAdded } from '../features/itemsSlice';
+import { itemAdded, itemUpdated, countAdded } from '../features/itemsSlice';
+import { useSelector } from 'react-redux';
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -16,24 +18,36 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 export default function ItemList(props) {
   const [data, setData] = useState(null);
-  const [cartList, setCartList] = useState([]);
   const [roboTypes, setroboTypes] = useState([]);
   const dispatch = useDispatch();
-  const handleClick = (index) => {
-    if(data[index].stock > 0){
-      setData(prevData => [...prevData, data[index].stock -=1])
+  const cartItems = useSelector(state => state.items);
+
+  const handleClick = (item) => {
+    if(item.stock > 0){
+      setData(prevData => [...prevData, item.stock -=1])
+      const existingItem = cartItems.find(v => v.name === item.name)
+      if(existingItem){
+        dispatch(itemUpdated({
+          "name": item.name,
+          "image": item.image,
+          "price": item.price,
+          "stocks": item.stock,
+        }))
+      } else {
+        dispatch(
+          itemAdded(
+            item.name,
+            item.image,
+            item.price,
+            item.stock,
+          )
+        )
+      }  
+      dispatch(countAdded(item.name))
+   
     }
-    if(roboTypes.length <5 && roboTypes.indexOf(data[index].name) === -1){
-      setroboTypes(prev => [...prev, data[index].name] );
-      dispatch(
-        itemAdded({
-          "name": data[index].name,
-          "image": data[index].image,
-          "price": data[index].price,
-          "stocks": data[index].stock
-        })
-      )
-      // setCartList(prevList => [...prevList, data[index]]);
+    if(roboTypes.length <5 && roboTypes.indexOf(item.name) === -1){
+      setroboTypes(prev => [...prev, item.name] );
     }else if(roboTypes.length === 5){
       alert("Robort Type is more than 5 now!")
     }
@@ -57,7 +71,7 @@ export default function ItemList(props) {
                 <h5>Material: {item.material}</h5>
                 <h5 className="stock">Stock: {item.stock}</h5>
               </div>
-              <IconButton className="addCart" size="large" onClick={()=>handleClick(index)} disabled={item.stock == 0} aria-label="show items" color="inherit">
+              <IconButton className="addCart" size="large" onClick={()=>handleClick(item)} disabled={item.stock === 0} aria-label="show items" color="inherit">
                 <AddOutlinedIcon />
               </IconButton>
             </div>
