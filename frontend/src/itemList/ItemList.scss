@@ -1,0 +1,58 @@
+
+$primary-color: #1976d2;
+.itemList{
+    margin-top: 5px !important;
+    .content{
+        display: flex;
+        .desc{
+            flex: 1 1 0px;
+            >h3{
+                color: $primary-color;
+                text-align: left;
+                font-weight: 600;
+            }
+            >h4{
+                text-align: left;
+            }
+            >h5{
+                color: grey;
+                text-align: left;
+                margin:0;
+            }
+            >.title{
+                text-align: left;
+                margin-bottom: 0;
+            }
+            >.price{
+                color: $primary-color;
+                text-align: left;
+                margin-top:0;
+                margin-bottom: 10px;
+            }
+            >.stock{
+                color: red;            
+            }
+        }
+        .addCart{
+            display: flex;
+            flex-direction: column-reverse;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: start;
+            justify-content: flex-start;
+            width: 30px;
+            >svg{
+                fill: $primary-color;
+                border: 1px solid $primary-color;
+                border-radius: 3px;
+                &:hover{
+                    background-color: rgba(25, 118, 210,0.1);
+                }
+            }
+            &:hover{
+                background:0;
+            }
+        }
+       
+    }
+}
