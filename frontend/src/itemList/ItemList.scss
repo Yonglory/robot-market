@@ -52,6 +52,13 @@ $primary-color: #1976d2;
             &:hover{
                 background:0;
             }
+            &:disabled,
+            &[disabled]{
+                >svg{
+                    border: 1px solid #cccccc;
+                    fill: #cccccc;
+                }
+            }
         }
        
     }
