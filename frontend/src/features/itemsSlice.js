@@ -1,15 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = [
-    {
-        "name": "dummy robot",
-        "image": "https://robohash.org/Quinn Corwin.png?size=120x120",
-        "price": "211.39",
-        "stocks": 5,
-        "count": 0,
-        "totalAmt": 0
-    }
-]
+const initialState = []
 const itemsSlice = createSlice({
     name: 'items',
     initialState,
