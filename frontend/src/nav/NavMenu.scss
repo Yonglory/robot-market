@@ -8,3 +8,40 @@
   background: none;
   color: #0f3460;
 }
+.title{
+  height: 74px;
+  display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 0px 20px;
+    height: 74px;
+    color: #1976d2;
+}
+.cartList{
+  display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgb(243, 245, 249);
+    >li{
+      padding-left: 0;
+    }
+    .action{
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      flex-direction: column;
+      .add, .remove{
+        border: 1px solid #cccccc;
+      }
+    }
+
+  span{
+    margin: 10px;
+  }
+}
+
+.checkOut{
+  width: 100%;
+  margin-top: 10px;
+}

@@ -15,12 +15,17 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function ItemList(props) {
   const [data, setData] = useState(null);
   const [cartList, setCartList] = useState([]);
+  const [roboTypes, setroboTypes] = useState([])
   const handleClick = (index) => {
     if(data[index].stock > 0){
       setData(prevData => [...prevData, data[index].stock -=1])
     }
-    setCartList(prevList => [...prevList, data[index]]);
-    console.log(cartList);
+    if(roboTypes.length <5 && roboTypes.indexOf(data[index].name) === -1){
+      setroboTypes(prev => [...prev, data[index].name] );
+      // setCartList(prevList => [...prevList, data[index]]);
+    }else if(roboTypes.length === 5){
+      alert("Robort Type is more than 5 now!")
+    }
   }
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Container from "@mui/material/Container";
 import NavMenu from "./nav/NavMenu";
 import ItemList from "./itemList/ItemList";
